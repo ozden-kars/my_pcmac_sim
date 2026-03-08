@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildspec version="4.0">
+  <dir path="." makemake-options="
+    -f --deep -O out
+    -I~/veins/src
+    -I~/plexe/src
+    -I~/cooperis/src
+    -L~/veins/out/gcc-release/src -lveins
+    -L~/plexe/out/gcc-release/src -lplexe
+    -L~/cooperis/src -lcooperis
+    -lgsl -lgslcblas"/>
+</buildspec>

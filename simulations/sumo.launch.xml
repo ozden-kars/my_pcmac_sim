@@ -1,0 +1,5 @@
+<launch>
+    <copy file="highway.net.xml"/>
+    <copy file="highway.rou.xml"/>
+    <launch-attribute key="--step-length" value="0.1"/>
+</launch>
