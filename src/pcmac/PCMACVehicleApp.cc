@@ -67,11 +67,7 @@ int PCMACVehicleApp::mapPriorityToCW(double P)
 void PCMACVehicleApp::sendEmergencyMessage()
 {
     double priority = computePriority();
-    int    newCw    = mapPriorityToCW(priority);
-
-    if (usePCMAC) {
-        mac->setPCMACContWindow(newCw); // PCMAC mode
-    }
+    int    newCw    = mapPriorityToCW(priority);   // computed but not directly applied to MAC
 
     PCMACMessage* msg = new PCMACMessage();
     populateWSM(msg);
@@ -83,13 +79,13 @@ void PCMACVehicleApp::sendEmergencyMessage()
     msg->setSenderSpeed(mobility->getSpeed());
     msg->setPlatoonSize(platoonSize);
     msg->setPlatoonAvgVelocity(platoonAvgVelocity);
-    msg->setUserPriority(7);    // AC_VO — highest priority queue
-    msg->setBitLength(800);     // 100 bytes as specified in paper
+    // AC_VO (userPriority=7) = highest EDCA priority — this IS the PCMAC mechanism
+    msg->setUserPriority(7);
+    msg->setBitLength(800);
+    emit(sigThroughput, (double)800);
     sendDown(msg);
-
-    if (usePCMAC) {
-        mac->resetContWindow();
-    }
+    // NOTE: Direct CW manipulation is not supported by stock Veins Mac1609_4.
+    // PCMAC priority is expressed via AC queue selection (AC_VO = highest).
 }
 
 // ── Handle received beacons — update neighbour table ─────────────────────

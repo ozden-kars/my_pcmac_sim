@@ -1,4 +1,5 @@
 
+package pcmac;
 
 import org.car2x.veins.base.connectionManager.ConnectionManager;
 import org.car2x.veins.base.modules.BaseWorldUtility;
@@ -56,11 +57,9 @@ network HighwayPCMAC
                 @display("p=200,200");
         }
 
-        // Vehicle nodes
-        node[numVehicles]: Car {
-            parameters:
-                applType = "PCMACVehicleApp";
-                @display("i=car;is=vs");
+        // Vehicle nodes — size 0 when TraCI manager handles spawning, numVehicles for static
+        node[useManager ? 0 : numVehicles]: Car {
+            @display("i=car;is=vs");
         }
 
         // Single RSU broadcasting platoon state every 50ms

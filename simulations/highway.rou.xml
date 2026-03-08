@@ -1,21 +1,18 @@
 <routes>
-    <vType id="car"
-           accel="3.0"
-           decel="6.0"
-           length="5"
-           maxSpeed="30"/>
+    <!-- vtypeauto is required by PlatoonsTrafficManager -->
+    <vType id="vtypeauto"
+           accel="2.5"
+           decel="9.0"
+           sigma="0"
+           length="4"
+           minGap="2.5"
+           maxSpeed="42"
+           color="1,0,0"
+           tau="0.1"
+           speedFactor="1.0"/>
 
-    <route id="highway" edges="A0B0"/>
+    <route id="highway" edges="highway"/>
 
-    <!-- Platoon of 10 vehicles at 10m spacing, all departing at t=1s -->
-    <!-- departSpeed=27.78 m/s = 100 km/h as in paper -->
-    <flow id="platoon"
-          type="car"
-          route="highway"
-          begin="1"
-          end="2"
-          number="10"
-          departSpeed="27.78"
-          departLane="0"
-          departPos="incremental"/>
+    <!-- Do NOT add a static <flow> here.
+         PlatoonsTrafficManager inserts vehicles dynamically via TraCI. -->
 </routes>
